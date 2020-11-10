@@ -24,3 +24,7 @@ ms = Client(args.computer, username=args.user,password=password, ssl=False)
 ps_cmd = "Add-dnsserverresourcerecorda -name '%s' -ZoneName '%s' -IPV4Address '%s' -AllowUpdateAny" % (args.name, args.zone, args.ip)
 output, streams, had_errors = ms.execute_ps(ps_cmd)
 print("Status: %s, Success: %s" % (output, not had_errors))
+
+f = open("./test", "a")
+f.write("Testing!!")
+f.close()

@@ -5,10 +5,11 @@ import (
         "bytes"
         "strings"
         "errors"
+        "fmt"
 )
 
-func runCommand(args ...string) (string, error) {
-        cmd := exec.Command(args[0], args[1:]...)
+func runCommand(args []string) (string, error) {
+        cmd := exec.Command("/usr/bin/python3", args...)
 
         var out bytes.Buffer
         var err bytes.Buffer
@@ -27,9 +28,11 @@ func runCommand(args ...string) (string, error) {
 }
 
 func RunPyDnsCommandCreate(name string, username string, password string, server string, zone string, ip string, dnspy string ) (string, error) {
-        var pycmd string
-        pycmd = "/usr/bin/python3 " + dnspy + " --name " + name + "--zone " + zone + " --ip " + ip + " --computer " + server + " --user " + username + "--password " + password
-        out, err := runCommand(pycmd) 
-
+        dnscmd := []string{"create-dns.py","--name",name,"--zone",zone,"--ip",ip,"--computer",server,"--user",username,"--password",password}
+        //pycmd = "/usr/bin/python3" + dnspy + " --name " + name + "--zone " + zone + " --ip " + ip + " --computer " + server + " --user " + username + "--password " + password
+        out, err := runCommand(dnscmd) 
+        fmt.Println(out)
+        fmt.Println(err)
         return out, err
 }
+
