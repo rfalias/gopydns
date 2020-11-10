@@ -10,6 +10,7 @@ par.add_argument('--computer',type=str, help='Remote computer to run against, us
 par.add_argument('--user', type=str, help='Username')
 par.add_argument('--password', type=str, help='Password')
 par.add_argument('--ask-pass', help='Ask for password', action='store_true')
+par.add_argument('--remove', help='Remove the record', action='store_true')
 args = par.parse_args()
 print(args)
 
@@ -21,7 +22,12 @@ else:
         exit(-1)
     password = args.password
 ms = Client(args.computer, username=args.user,password=password, ssl=False)
-ps_cmd = "Add-dnsserverresourcerecorda -name '%s' -ZoneName '%s' -IPV4Address '%s' -AllowUpdateAny" % (args.name, args.zone, args.ip)
+
+if args.remove:
+#Remove-DnsServerResourceRecord -ZoneName "contoso.com" -RRType "A" -Name "Host01" -RecordData "10.17.1.41"
+    ps_cmd = "Remove-DnsServerResourceRecord -name '%s' -ZoneName '%s' -RecordData '%s' -RRType 'A' -force" % (args.name, args.zone, args.ip)
+else:
+    ps_cmd = "Add-dnsserverresourcerecorda -name '%s' -ZoneName '%s' -IPV4Address '%s' -AllowUpdateAny" % (args.name, args.zone, args.ip)
 output, streams, had_errors = ms.execute_ps(ps_cmd)
 print("Status: %s, Success: %s" % (output, not had_errors))
 
