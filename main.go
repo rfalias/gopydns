@@ -28,7 +28,7 @@ func runCommand(args []string) (string, error) {
 }
 
 func RunPyDnsCommandCreate(name string, username string, password string, server string, zone string, ip string, dnspy string ) (string, error) {
-        dnscmd := []string{"create-dns.py","--name",name,"--zone",zone,"--ip",ip,"--computer",server,"--user",username,"--password",password}
+        dnscmd := []string{dnspy,"--name",name,"--zone",zone,"--ip",ip,"--computer",server,"--user",username,"--password",password}
         //pycmd = "/usr/bin/python3" + dnspy + " --name " + name + "--zone " + zone + " --ip " + ip + " --computer " + server + " --user " + username + "--password " + password
         out, err := runCommand(dnscmd) 
         fmt.Println(out)
@@ -38,7 +38,7 @@ func RunPyDnsCommandCreate(name string, username string, password string, server
 
 
 func RunPyDnsCommandRemove(name string, username string, password string, server string, zone string, ip string, dnspy string ) (string, error) {
-        dnscmd := []string{"create-dns.py","--name",name,"--zone",zone,"--ip",ip,"--computer",server,"--user",username,"--password",password, "--remove"}
+        dnscmd := []string{dnspy,"--name",name,"--zone",zone,"--ip",ip,"--computer",server,"--user",username,"--password",password, "--remove"}
         //pycmd = "/usr/bin/python3" + dnspy + " --name " + name + "--zone " + zone + " --ip " + ip + " --computer " + server + " --user " + username + "--password " + password
         out, err := runCommand(dnscmd)
         fmt.Println(out)
